@@ -186,7 +186,6 @@ async def check_season1(message: types.Message):
             place, swimcoins_to_lvl = await get_no_leaders(message, message.from_user.id, data)
             cursor.execute("SELECT season1 FROM leaderboard WHERE user_id = ?", (message.from_user.id, ))
             swimcoin = int(cursor.fetchone()[0])
-            print(place)
             if place == 1:
                 await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
                                      f"Поздравляю!Ты - лидер!🥳")
