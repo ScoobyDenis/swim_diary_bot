@@ -186,7 +186,6 @@ async def check_season1(message: types.Message):
             place, swimcoins_to_lvl = await get_no_leaders(message, message.from_user.id, data)
             cursor.execute("SELECT season1 FROM leaderboard WHERE user_id = ?", (message.from_user.id, ))
             swimcoin = int(cursor.fetchone()[0])
-            print(place)
             if place == 1:
                 await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
                                      f"Поздравляю!Ты - лидер!🥳")
@@ -273,7 +272,7 @@ async def get_vote(message: types.Message):
             [InlineKeyboardButton(text='🧸Набор игрушек антистресс', callback_data='votes_2')],
             [InlineKeyboardButton(text='💳Сертификат на озон/вб 1500руб', callback_data='votes_3')],
             [InlineKeyboardButton(text='🍬🥚Kinder набор', callback_data='votes_4')],
-            [InlineKeyboardButton(text='📊Показать результаты голосования', callback_data='show_results')]
+            [InlineKeyboardButton(text='📊Показать результаты голосования', callback_data='show_vote_results')]
         ])
     )
 
@@ -296,6 +295,9 @@ async def add_vote(callback: CallbackQuery):
         await callback.message.answer("Вы уже голосовали!")
     await show_results(callback.message)
 
+@router.callback_query(F.data.startswith('show'))
+async def show_vote_res(callback: CallbackQuery):
+    await show_results(callback.message)
 
 
 
