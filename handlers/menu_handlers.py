@@ -295,7 +295,8 @@ async def add_vote(callback: CallbackQuery):
         await callback.message.answer("Вы уже голосовали!")
     await show_results(callback.message)
 
-
-
+@router.callback_query(F.data.startswith('show'))
+async def show_vote_res(callback: CallbackQuery):
+    await show_results(callback.message)
 
 
