@@ -172,7 +172,7 @@ async def check_leaderboard(message: types.Message):
                 else:
                     await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
                                          f"Ваше место {place}\n"
-                                         f"до {place-1} места {swimcoins_to_lvl} swimcoin(s)")
+                                         f"до {place-1} места {round(swimcoins_to_lvl, 1)} swimcoin(s)")
      except Exception as e:
         logging.error(f"Произошла ошибка: {e}")
 
@@ -196,7 +196,7 @@ async def check_season1(message: types.Message):
                 else:
                     await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
                                         f"Ваше место {place}\n"
-                                        f"до {place-1} места {swimcoins_to_lvl} swimcoin(s)")
+                                        f"до {place-1} места {round(swimcoins_to_lvl, 1)} swimcoin(s)")
         await message.answer(f"Награды:\n"
                              f"<b>третье</b> место\n🌅 набор стикеров(50шт)\n\n"
                              f"<b>второе</b>\n"
