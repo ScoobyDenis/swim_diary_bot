@@ -121,11 +121,11 @@ async def get_leaderboard_table(message:types.Message, data):
         if place == 1:
             msg += f'🥇 <b>{point}</b> - {swimmer[1]} {swimmer[2]}\n' # @{await get_swimmer_username(swimmer[0])}\n'
         elif place == 2:
-            msg += f'🥈 <b>{point}</b> - {swimmer[1]} {swimmer[2]\n' # @{await get_swimmer_username(swimmer[0])}\n'
+            msg += f'🥈 <b>{point}</b> - {swimmer[1]} {swimmer[2]}\n' # @{await get_swimmer_username(swimmer[0])}\n'
         elif place == 3:
-            msg += f'🥉 <b>{point}</b> - {swimmer[1]} {swimmer[2]\n' # @{await get_swimmer_username(swimmer[0])}\n'
+            msg += f'🥉 <b>{point}</b> - {swimmer[1]} {swimmer[2]}\n' # @{await get_swimmer_username(swimmer[0])}\n'
         else:
-            msg += f' {place}. <b>{point}</b> - {swimmer[1]} {swimmer[2]\n' # @{await get_swimmer_username(swimmer[0])}\n'
+            msg += f' {place}. <b>{point}</b> - {swimmer[1]} {swimmer[2]}\n' # @{await get_swimmer_username(swimmer[0])}\n'
         place += 1
     await message.answer(msg, parse_mode="html")
     return sorted_data[:10]
