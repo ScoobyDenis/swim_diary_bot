@@ -113,8 +113,12 @@ async def async_sort(data):
 async def get_swimmer_username(id):
     connect, cursor = connect_db(DB_NAME1)
     cursor.execute("SELECT user_name FROM users WHERE user_id = ?", (id,))
-    username = cursor.fetchone()[0]
-    return username
+    username = cursor.fetchone()
+    if username:
+        username = username[0]
+        return username
+    else:
+        return None
 
 # get leaderboard table
 async def get_leaderboard_table(message:types.Message, data):
@@ -149,8 +153,12 @@ async def get_no_leaders(message:types.Message, id, data):
     try:
         sorted_data = await async_sort(data)
         place = await get_data_by_id(sorted_data, id)
-        swimcoins_to_lvl = sorted_data[place-2][-1] - int(sorted_data[place-1][-1])
-        return place, swimcoins_to_lvl
+
+        if place != ' ':
+            swimcoins_to_lvl = sorted_data[place-2][-1] - int(sorted_data[place-1][-1])
+            return place, swimcoins_to_lvl
+        else:
+            return ' ', swimcoins_to_lvl
     except Exception as e:
         logging.error(f"Произошла ошибка: {e}")
 
