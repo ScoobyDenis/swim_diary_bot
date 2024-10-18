@@ -151,7 +151,7 @@ async def distances(callback: CallbackQuery):
         data = cursor.fetchone()
         await callback.message.answer(f"{TO_RUS_DISTANCE[distance]} - {data[0]}")
 
- get leaderboard
+
 @router.message(Command('leaderboard'))
 async def check_leaderboard(message: types.Message):
      try:
