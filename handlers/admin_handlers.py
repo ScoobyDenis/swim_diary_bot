@@ -107,6 +107,9 @@ async def del_swimmer(message: types.Message, command: CommandObject):
         connect, cursor = connect_db(DB_NAME1)
         cursor.execute('DELETE FROM users WHERE user_id = ?', (id,))
         connect.commit()
+        connect, cursor = connect_db(DB_NAME4)
+        cursor.execute('DELETE FROM leaderboard WHERE user_id = ?', (id,))
+        connect.commit()
         await message.answer(f"Пловец с id {id} удален")
     except:
         await message.answer("Неверное id")
