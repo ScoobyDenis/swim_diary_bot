@@ -156,7 +156,7 @@ async def distances(callback: CallbackQuery):
 async def check_leaderboard(message: types.Message):
     try:
         connect, cursor = connect_db(DB_NAME4)
-        cursor.execute("SELECT user_id, name, points FROM leaderboard")
+        cursor.execute("SELECT user_id, name, surname, points FROM leaderboard")
         data = cursor.fetchall()
         sorted_data = await get_leaderboard_table(message, data)
         if message.from_user.id not in sorted_data and message.from_user.id != ADMIN:
@@ -181,7 +181,7 @@ async def check_leaderboard(message: types.Message):
 async def check_season1(message: types.Message):
     try:
         connect, cursor = connect_db(DB_NAME4)
-        cursor.execute("SELECT user_id, name, season1 FROM leaderboard")
+        cursor.execute("SELECT user_id, name, surname, season1 FROM leaderboard")
         data = cursor.fetchall()
         sorted_data = await get_leaderboard_table(message, data)
         if message.from_user.id not in sorted_data and message.from_user.id != ADMIN:        
