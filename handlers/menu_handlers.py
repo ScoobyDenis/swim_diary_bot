@@ -151,10 +151,10 @@ async def distances(callback: CallbackQuery):
         data = cursor.fetchone()
         await callback.message.answer(f"{TO_RUS_DISTANCE[distance]} - {data[0]}")
 
-# get leaderboard
+ get leaderboard
 @router.message(Command('leaderboard'))
 async def check_leaderboard(message: types.Message):
-    try:
+     try:
         connect, cursor = connect_db(DB_NAME4)
         cursor.execute("SELECT user_id, name, surname, points FROM leaderboard")
         data = cursor.fetchall()
@@ -173,7 +173,7 @@ async def check_leaderboard(message: types.Message):
                     await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
                                          f"Ваше место {place}\n"
                                          f"до {place-1} места {swimcoins_to_lvl} swimcoin(s)")
-    except Exception as e:
+     except Exception as e:
         logging.error(f"Произошла ошибка: {e}")
 
 # get season1
@@ -184,7 +184,7 @@ async def check_season1(message: types.Message):
         cursor.execute("SELECT user_id, name, surname, season1 FROM leaderboard")
         data = cursor.fetchall()
         sorted_data = await get_leaderboard_table(message, data)
-        if message.from_user.id not in sorted_data and message.from_user.id != ADMIN:        
+        if message.from_user.id not in sorted_data and message.from_user.id != ADMIN:
             cursor.execute("SELECT season1 FROM leaderboard WHERE user_id = ?", (message.from_user.id, ))
             swimcoin = cursor.fetchone()
             if swimcoin and swimcoin[0] != '-':
@@ -192,7 +192,7 @@ async def check_season1(message: types.Message):
                 place, swimcoins_to_lvl = await get_no_leaders(message, message.from_user.id, data)
                 if place == 1:
                     await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
-                                     f"Поздравляю!Ты - лидер!🥳")
+                                         f"Поздравляю!Ты - лидер!🥳")
                 else:
                     await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
                                         f"Ваше место {place}\n"
