@@ -159,20 +159,20 @@ async def check_leaderboard(message: types.Message):
         cursor.execute("SELECT user_id, name, points FROM leaderboard")
         data = cursor.fetchall()
         sorted_data = await get_leaderboard_table(message, data)
-        # if message.from_user.id not in sorted_data and message.from_user.id != ADMIN:
-        #     cursor.execute("SELECT points FROM leaderboard WHERE user_id = ?", (message.from_user.id, ))
-        #     swimcoin = cursor.fetchone()
-        #     if swimcoin and swimcoin[0] != '-':
-        #         swimcoin = int(swimcoin[0])
-        #         place, swimcoins_to_lvl = await get_no_leaders(message, message.from_user.id, data)
-        #         if place == 1:
-        #             await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
-        #                                  f"Поздравляю!Ты - лидер!🥳\n"
-        #                                  f"И любимчик тренера 😉")
-        #         else:
-        #             await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
-        #                                  f"Ваше место {place}\n"
-        #                                  f"до {place-1} места {swimcoins_to_lvl} swimcoin(s)")
+        if message.from_user.id not in sorted_data and message.from_user.id != ADMIN:
+            cursor.execute("SELECT points FROM leaderboard WHERE user_id = ?", (message.from_user.id, ))
+            swimcoin = cursor.fetchone()
+            if swimcoin and swimcoin[0] != '-':
+                swimcoin = int(swimcoin[0])
+                place, swimcoins_to_lvl = await get_no_leaders(message, message.from_user.id, data)
+                if place == 1:
+                    await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
+                                         f"Поздравляю!Ты - лидер!🥳\n"
+                                         f"И любимчик тренера 😉")
+                else:
+                    await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
+                                         f"Ваше место {place}\n"
+                                         f"до {place-1} места {swimcoins_to_lvl} swimcoin(s)")
     except Exception as e:
         logging.error(f"Произошла ошибка: {e}")
 
@@ -184,19 +184,19 @@ async def check_season1(message: types.Message):
         cursor.execute("SELECT user_id, name, season1 FROM leaderboard")
         data = cursor.fetchall()
         sorted_data = await get_leaderboard_table(message, data)
-        # if message.from_user.id not in sorted_data and message.from_user.id != ADMIN:        
-        #     cursor.execute("SELECT season1 FROM leaderboard WHERE user_id = ?", (message.from_user.id, ))
-        #     swimcoin = cursor.fetchone()
-        #     if swimcoin and swimcoin[0] != '-':
-        #         swimcoin = int(swimcoin[0])
-        #         place, swimcoins_to_lvl = await get_no_leaders(message, message.from_user.id, data)
-        #         if place == 1:
-        #             await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
-        #                              f"Поздравляю!Ты - лидер!🥳")
-        #         else:
-        #             await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
-        #                                 f"Ваше место {place}\n"
-        #                                 f"до {place-1} места {swimcoins_to_lvl} swimcoin(s)")
+        if message.from_user.id not in sorted_data and message.from_user.id != ADMIN:        
+            cursor.execute("SELECT season1 FROM leaderboard WHERE user_id = ?", (message.from_user.id, ))
+            swimcoin = cursor.fetchone()
+            if swimcoin and swimcoin[0] != '-':
+                swimcoin = int(swimcoin[0])
+                place, swimcoins_to_lvl = await get_no_leaders(message, message.from_user.id, data)
+                if place == 1:
+                    await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
+                                     f"Поздравляю!Ты - лидер!🥳")
+                else:
+                    await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
+                                        f"Ваше место {place}\n"
+                                        f"до {place-1} места {swimcoins_to_lvl} swimcoin(s)")
         await message.answer(f"Награды:\n"
                              f"<b>третье</b> место\n🌅 набор стикеров(50шт)\n\n"
                              f"<b>второе</b>\n"
