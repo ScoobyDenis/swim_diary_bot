@@ -101,7 +101,7 @@ async def pick_info_and_add(message: types.Message, day, id, meteres, mark):
 # sort swimmers for leaderboard
 async def async_sort(data):
     def custom_sort(item):
-        value = item[2]
+        value = item[3]
         if value == '-':
             return (1,)
         else:
@@ -109,33 +109,23 @@ async def async_sort(data):
     sorted_data = await asyncio.to_thread(sorted, data, key=custom_sort)
     return sorted_data
 
-# get swimmer username
-async def get_swimmer_username(id):
-    connect, cursor = connect_db(DB_NAME1)
-    cursor.execute("SELECT user_name FROM users WHERE user_id = ?", (id,))
-    if username:
-        username = cursor.fetchone()[0]
-        return username
-    else:
-        return None
-
 # get leaderboard table
 async def get_leaderboard_table(message:types.Message, data):
     sorted_data = await async_sort(data)
     msg = ''
     place = 1
     for swimmer in sorted_data[:10]:
-        point = swimmer[2]
+        point = swimmer[3]
         if isinstance(point, float):
             point = round(float(point), 1)
         if place == 1:
-            msg += f'🥇 <b>{point}</b> - {swimmer[1]}\n' # @{await get_swimmer_username(swimmer[0])}\n'
+            msg += f'🥇 <b>{point}</b> - {swimmer[1]} {swimmer[2]}\n' # @{await get_swimmer_username(swimmer[0])}\n'
         elif place == 2:
-            msg += f'🥈 <b>{point}</b> - {swimmer[1]}\n' # @{await get_swimmer_username(swimmer[0])}\n'
+            msg += f'🥈 <b>{point}</b> - {swimmer[1]} {swimmer[2]\n' # @{await get_swimmer_username(swimmer[0])}\n'
         elif place == 3:
-            msg += f'🥉 <b>{point}</b> - {swimmer[1]}\n' # @{await get_swimmer_username(swimmer[0])}\n'
+            msg += f'🥉 <b>{point}</b> - {swimmer[1]} {swimmer[2]\n' # @{await get_swimmer_username(swimmer[0])}\n'
         else:
-            msg += f' {place}. <b>{point}</b> - {swimmer[1]}\n' # @{await get_swimmer_username(swimmer[0])}\n'
+            msg += f' {place}. <b>{point}</b> - {swimmer[1]} {swimmer[2]\n' # @{await get_swimmer_username(swimmer[0])}\n'
         place += 1
     await message.answer(msg, parse_mode="html")
     return sorted_data[:10]
