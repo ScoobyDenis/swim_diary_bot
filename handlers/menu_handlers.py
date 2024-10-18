@@ -11,12 +11,6 @@ from data_bases.connect_data_base import connect_db, DB_NAME1, DB_NAME3, POLL_RE
 
 router = Router()
 
-@router.message(Command('leaders'))
-async def check_leaders(message: types.Message):
-    connect, cursor = connect_db(DB_NAME4)
-    cursor.execute("SELECT user_id, name, points FROM leaderboard")
-    data = cursor.fetchall()
-    sorted_data = await get_leaderboard_table(message, data)
 
 # check schedule
 @router.message(Command('check'))
