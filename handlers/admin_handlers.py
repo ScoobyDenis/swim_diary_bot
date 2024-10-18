@@ -107,6 +107,9 @@ async def del_swimmer(message: types.Message, command: CommandObject):
         connect, cursor = connect_db(DB_NAME1)
         cursor.execute('DELETE FROM users WHERE user_id = ?', (id,))
         connect.commit()
+        connect, cursor = connect_db(DB_NAME4)
+        cursor.execute('DELETE FROM leaderboard WHERE user_id = ?', (id,))
+        connect.commit()
         await message.answer(f"Пловец с id {id} удален")
     except:
         await message.answer("Неверное id")
@@ -249,3 +252,29 @@ async def send_msg_to_swimmers(message: types.Message, command: CommandObject):
                 await bot.send_message(id[0], msg)
         except Exception as e:
             logging.error(e)
+
+@router.message(Command("add_leader"))
+async def add_leader(message: types.Message, command: CommandObject):
+    try:
+        id = int(command.args)
+        connect, cursor = connect_db(DB_NAME1)
+        cursor.execute("SELECT swimmer_name, swimmer_surname FROM users WHERE user_id = ?", (id, ))
+        data = cursor.fetchone()
+        name = data[0]
+        surname = data[1]
+        await create_new_leaderboard_user(id)
+        await set_swimmer_name_to_leaderboard(name, id)
+        await set_swimmer_surname_to_leaderboard(surname, id)
+    except Exception as e:
+        logging.error(e)
+
+@router.message(Command("del_leader"))
+async def del_swimmer(message: types.Message, command: CommandObject):
+    try:
+        id = command.args.split()[0]
+        connect, cursor = connect_db(DB_NAME4)
+        cursor.execute('DELETE FROM leaderboard WHERE user_id = ?', (id,))
+        connect.commit()
+        await message.answer(f"Лидер с id {id} удален")
+    except:
+        await message.answer("Неверное id")
