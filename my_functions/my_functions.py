@@ -345,6 +345,12 @@ async def set_swimmer_name_to_leaderboard(name, id):
     cursor.execute(f"UPDATE leaderboard SET name = '{name}' WHERE user_id = {id}")
     connect.commit()
 
+# set swimmer surname to leadeboard
+async def set_swimmer_surname_to_leaderboard(surname, id):
+    connect, cursor = connect_db(DB_NAME4)
+    cursor.execute(f"UPDATE leaderboard SET surname = '{surname}' WHERE user_id = {id}")
+    connect.commit()
+
 # set swimmer surname to users
 async def set_swimmer_surname_to_users(surname, id):
     connect, cursor = connect_db(DB_NAME1)
