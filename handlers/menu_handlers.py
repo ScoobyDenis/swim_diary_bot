@@ -174,6 +174,7 @@ async def check_leaderboard(message: types.Message):
         #                                  f"Ваше место {place}\n"
         #                                  f"до {place-1} места {swimcoins_to_lvl} swimcoin(s)")
     except Exception as e:
+        await message.answer("e")
         logging.error(f"Произошла ошибка: {e}")
 
 # get season1
