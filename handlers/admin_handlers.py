@@ -253,7 +253,6 @@ async def send_msg_to_swimmers(message: types.Message, command: CommandObject):
         except Exception as e:
             logging.error(e)
 
-# add new leader
 @router.message(Command("add_leader"))
 async def add_leader(message: types.Message, command: CommandObject):
     try:
@@ -269,7 +268,6 @@ async def add_leader(message: types.Message, command: CommandObject):
     except Exception as e:
         logging.error(e)
 
-# del leader
 @router.message(Command("del_leader"))
 async def del_swimmer(message: types.Message, command: CommandObject):
     try:
