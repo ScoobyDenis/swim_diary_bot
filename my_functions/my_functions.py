@@ -261,7 +261,7 @@ async def get_mark_mean(message: types.Message, id):
         await message.answer("Пока что нет оценок")
     else:
         mean_mark = mark / total_lessons
-        await message.answer(f"Средняя оценка - {mean_mark}{d[int(mean_mark)]}\n")
+        await message.answer(f"Средняя оценка - {round(mean_mark, 1)}{d[int(mean_mark)]}\n")
 
 # get meteres info
 async def get_meteres_info(message: types.Message, id):
@@ -405,7 +405,7 @@ async def get_kb_diary(message: types.Message, id):
     inline_kb = []
     inline_kb.append([InlineKeyboardButton(text='🏊🏾‍♂️Последний урок', callback_data='lesson_' + str(id))])
     #inline_kb.append([InlineKeyboardButton(text='🏊🏾‍♂️5 Последних уроков', callback_data='fivelastlesson_' + str(id))])
-    #inline_kb.append([InlineKeyboardButton(text='🏊🏾‍♂️10 Последних уроков', callback_data='tenlastlesson_' + str(id))])
+    inline_kb.append([InlineKeyboardButton(text='🏊🏾‍♂️🏊🏾‍♂️🏊🏾‍♂️🏊🏾‍♂️🏊🏾‍♂️10 Последних уроков', callback_data='tenlastlesson_' + str(id))])
     inline_kb.append([InlineKeyboardButton(text='📈Средняя оценка', callback_data='markmean_' + str(id))])
     inline_kb.append([InlineKeyboardButton(text='🏊Общая длина проплытых метров', callback_data='meanmeteres_' + str(id))])
     keyboard = InlineKeyboardMarkup(
