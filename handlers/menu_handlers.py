@@ -234,21 +234,56 @@ async def for_kb_diary(callback: CallbackQuery):
     message = callback.message
     await get_kb_diary(message, id)
 
-# check last lesson result finisher
+# # check last lesson result finisher
+# @router.callback_query(F.data.startswith('lesson_'))
+# async def last_lesson(callback: CallbackQuery):
+#     my_id = str(callback.data.split('_')[1])
+#     connect, cursor = connect_db(DB_NAME3)
+#     cursor.execute(f"SELECT date, meteres_last, mark_last, comment FROM results WHERE user_id = {my_id}")
+#     data = cursor.fetchone()
+#     day = data[0]
+#     meteres = data[1]
+#     mark = data[2]
+#     comment = data[-1]
+#     await callback.message.answer(f"На тренировке {day} числа\n"
+#                                   f"🏊 Проплыто метров - {meteres}\n"
+#                                   f"5️⃣ Оценка - {mark}\n"
+#                                   f"📝 Комментарий тренера - '{comment}'")
+
+# get last lesson results
 @router.callback_query(F.data.startswith('lesson_'))
 async def last_lesson(callback: CallbackQuery):
     my_id = str(callback.data.split('_')[1])
     connect, cursor = connect_db(DB_NAME3)
-    cursor.execute(f"SELECT date, meteres_last, mark_last, comment FROM results WHERE user_id = {my_id}")
+    cursor.execute(f"SELECT date, mark_last, comment, meteres_last FROM results WHERE user_id = {my_id}")
     data = cursor.fetchone()
-    day = data[0]
-    meteres = data[1]
-    mark = data[2]
-    comment = data[-1]
+    day = data[0].split('_')[-1]
+    mark = data[1].split('_')[-1]
+    comment = data[2].split('_,')[-1]
+    meteres = data[3].split('_')[-1]
     await callback.message.answer(f"На тренировке {day} числа\n"
                                   f"🏊 Проплыто метров - {meteres}\n"
                                   f"5️⃣ Оценка - {mark}\n"
                                   f"📝 Комментарий тренера - '{comment}'")
+
+# get last lesson results
+@router.callback_query(F.data.startswith('tenlastlesson_'))
+async def ten_last_lesson(callback: CallbackQuery):
+    my_id = str(callback.data.split('_')[1])
+    connect, cursor = connect_db(DB_NAME3)
+    cursor.execute(f"SELECT date, mark_last, comment, meteres_last FROM results WHERE user_id = {my_id}")
+    data = cursor.fetchone()
+    days = data[0].split('_')[::-1]
+    marks = data[1].split('_')[::-1]
+    comments = data[2].split('_,')[::-1]
+    meteres = data[3].split('_')[::-1]
+    r = 10 if len(days) > 10 else len(days)
+    for i in range(r):
+        if days[i] != '-':
+            await callback.message.answer(f"На тренировке {days[i]} числа\n"
+                                        f"🏊 Проплыто метров - {meteres[i]}\n"
+                                        f"5️⃣ Оценка - {marks[i]}\n"
+                                        f"📝 Комментарий тренера - '{comments[i]}'")
 
 # check mark mean finisher
 @router.callback_query(F.data.startswith('markmean'))
