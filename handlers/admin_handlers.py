@@ -60,25 +60,55 @@ async def add_child(message: types.Message, command: CommandObject):
         await message.answer(f"Ошибка {e}\n"
                              f"Скорее всего неправильный id родителя")
 
-# add train_result
+# # add train_result
+# @router.message(Command('train_result')) # id day metres mark comment
+# async def add_train_result(message: types.Message, command: CommandObject):
+#     args = command.args.split()
+#     id = int(args[0])
+#     if not await check_id_in_users(id):
+#         day = str(datetime.now().date() - timedelta(days=int(args[1])))
+#         meteres = int(args[2])
+#         mark = int(args[3])
+#         try:
+#             comment = ' '.join(word.strip("'") for word in args[4:])
+#             connect, cursor = connect_db(DB_NAME3)
+#             cursor.execute("UPDATE results SET date = ?, meteres_last = ?, mark_last = ?, "
+#                            "comment = ?, meteres = meteres + ?, "
+#                            "mark = mark + ?, "
+#                            "total_lessons = total_lessons + 1 WHERE user_id = ?",
+#                            (day, meteres, mark, comment, meteres, mark, id))
+#             connect.commit()
+#             await pick_info_and_add(message, day, id, meteres, mark)
+#         except:
+#             await message.answer("Нет комментария")
+
+#         await message.answer(f"Для пловца {id} добавлено: \n"
+#                              f"Метров - {meteres}\n"
+#                              f"Оценка - {mark}\n"
+#                              f"Комментарий - {comment}\n"
+#                              f"Дата - {day}")
+#     else:
+#         await message.answer(f"Нет пловца с id {id}")
+
 @router.message(Command('train_result')) # id day metres mark comment
 async def add_train_result(message: types.Message, command: CommandObject):
     args = command.args.split()
     id = int(args[0])
     if not await check_id_in_users(id):
         day = str(datetime.now().date() - timedelta(days=int(args[1])))
-        meteres = int(args[2])
-        mark = int(args[3])
+        meteres = args[2]
+        mark = args[3]
         try:
             comment = ' '.join(word.strip("'") for word in args[4:])
             connect, cursor = connect_db(DB_NAME3)
-            cursor.execute("UPDATE results SET date = ?, meteres_last = ?, mark_last = ?, "
-                           "comment = ?, meteres = meteres + ?, "
+            cursor.execute("UPDATE results SET date = date || '_' || ?, meteres_last = meteres_last || '_' || ?, "
+                           "mark_last = mark_last || '_' || ?, "
+                           "comment = comment || '_' || ?, meteres = meteres + ?, "
                            "mark = mark + ?, "
                            "total_lessons = total_lessons + 1 WHERE user_id = ?",
-                           (day, meteres, mark, comment, meteres, mark, id))
+                           (day, meteres, mark, ',' + comment, int(meteres), int(mark), id))
             connect.commit()
-            await pick_info_and_add(message, day, id, meteres, mark)
+            await pick_info_and_add(message, day, id, int(meteres), int(mark))
         except:
             await message.answer("Нет комментария")
 
@@ -89,7 +119,7 @@ async def add_train_result(message: types.Message, command: CommandObject):
                              f"Дата - {day}")
     else:
         await message.answer(f"Нет пловца с id {id}")
-
+        
 # delete parent
 @router.message(Command("del_parent"))
 async def del_parent(message: types.Message, command: CommandObject):
