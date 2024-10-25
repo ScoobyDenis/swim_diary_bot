@@ -301,6 +301,23 @@ async def add_leader(message: types.Message, command: CommandObject):
     except Exception as e:
         logging.error(e)
 
+@router.message(Command("add_db_res"))
+async def add_leader(message: types.Message, command: CommandObject):
+    try:
+        id = int(command.args)
+        connect, cursor = connect_db(DB_NAME1)
+        cursor.execute("SELECT swimmer_name FROM users WHERE user_id = ?", (id, ))
+        data = cursor.fetchone()
+        name = data[0]
+        connect, cursor = connect_db(DB_NAME3)
+        data = [id, name, '-', '-', '-', '-', 0, 0, 0]
+        cursor.execute(
+            "INSERT INTO results (user_id, swimmer_name, date, meteres_last, mark_last, comment, meteres, mark, total_lessons) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            data)
+        connect.commit()
+    except Exception as e:
+        logging.error(e)
+
 @router.message(Command("del_leader"))
 async def del_swimmer(message: types.Message, command: CommandObject):
     try:
