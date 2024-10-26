@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from data_bases.connect_data_base import DF, connect_db, DB_NAME1, DB_NAME2, DB_NAME3, DB_NAME4, ADMIN
 from aiogram import types, Bot
 from config_data.config import Config, load_config
-
+from lexicon.lexicon_ru import WEEKDAYS
 
 config: Config = load_config()
 bot = Bot(token=config.tg_bot.token)
@@ -44,23 +44,27 @@ async def create_date_keyboard(mode):
     buttons = []
     if mode == 'swimmer':
         for _ in range(14):
+            wd = WEEKDAYS[today.weekday()]
             button_text = f"createdateswimmer_{today.strftime('%Y-%m-%d')}"
-            buttons.append([InlineKeyboardButton(text=today.strftime('%Y-%m-%d'), callback_data=button_text)])
+            buttons.append([InlineKeyboardButton(text=today.strftime('%Y-%m-%d')+' '+wd, callback_data=button_text)])
             today = today + timedelta(days=1)
     elif mode =='admin':
         for _ in range(14):
+            wd = WEEKDAYS[today.weekday()]
             button_text = f"createdateadmin_{today.strftime('%Y-%m-%d')}"
-            buttons.append([InlineKeyboardButton(text=today.strftime('%Y-%m-%d'), callback_data=button_text)])
+            buttons.append([InlineKeyboardButton(text=today.strftime('%Y-%m-%d')+' '+wd, callback_data=button_text)])
             today = today + timedelta(days=1)
     elif mode == 'parent':
         for _ in range(14):
+            wd = WEEKDAYS[today.weekday()]
             button_text = f"createdateparent_{today.strftime('%Y-%m-%d')}"
-            buttons.append([InlineKeyboardButton(text=today.strftime('%Y-%m-%d'), callback_data=button_text)])
+            buttons.append([InlineKeyboardButton(text=today.strftime('%Y-%m-%d')+' '+wd, callback_data=button_text)])
             today = today + timedelta(days=1)
     elif mode == 'cancel':
         for _ in range(14):
+            wd = WEEKDAYS[today.weekday()]
             button_text = f"createcancel_{today.strftime('%Y-%m-%d')}"
-            buttons.append([InlineKeyboardButton(text=today.strftime('%Y-%m-%d'), callback_data=button_text)])
+            buttons.append([InlineKeyboardButton(text=today.strftime('%Y-%m-%d')+' '+wd, callback_data=button_text)])
             today = today + timedelta(days=1)
     else:
         logging.info(f"Нет такого мода {mode}")
