@@ -21,7 +21,8 @@ async def check_kids_writes(message: types.Message):
         if locations:
             for loc in locations:
                 if loc[0] >= datetime.now() - timedelta(days=1):
-                    await message.answer(f"{loc[0].date()}\n{loc[1]}")
+                    wd = BIG_WEEKDAYS[loc[0].date().weekday()]
+                    await message.answer(f"{wd}, {loc[0].date()}\n{loc[1]}")
                     i += 1
         if i == 0:
             await message.answer("Пока что вы никуда не записаны.\n")
@@ -33,7 +34,8 @@ async def check_kids_writes(message: types.Message):
                 swimmer = l[1]
                 for loc in l[0]:
                     if loc[0] >= datetime.now() - timedelta(days=1):
-                        await message.answer(f"{loc[0].date()}\n{loc[1]} {swimmer}")
+                        wd = BIG_WEEKDAYS[loc[0].date().weekday()]
+                        await message.answer(f"{wd}, {loc[0].date()}\n{loc[1]} {swimmer}")
                         i += 1
             if i == 0:
                 await message.answer("Пока что вы никуда не записаны.\n"
