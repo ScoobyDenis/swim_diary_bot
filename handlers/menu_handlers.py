@@ -3,7 +3,7 @@ from aiogram.filters import Command
 from aiogram import F
 from aiogram import Router
 
-from lexicon.lexicon_ru import TO_RUS_DISTANCE
+from lexicon.lexicon_ru import TO_RUS_DISTANCE, BIG_WEEKDAYS
 from my_functions.my_functions import *
 from my_functions.functions_for_leaderboard import *
 from aiogram.fsm.context import FSMContext
