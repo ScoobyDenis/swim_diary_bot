@@ -54,7 +54,8 @@ async def cancel_trainings(message: types.Message):
                 swimmer = l[1]
                 for loc in l[0]:
                     if loc[0] >= datetime.now() - timedelta(days=1):
-                        inline_kb.append([InlineKeyboardButton(text=f"{loc[0].date()} {loc[1]} {swimmer}",
+                        wd = WEEKDAYS[loc[0].date().weekday()]
+                        inline_kb.append([InlineKeyboardButton(text=f"{wd}, {loc[0].date()} {loc[1]} {swimmer}",
                                                                callback_data='cancel_button_' + '_' + str(
                                                                    loc[0].date()) + '_' + str(loc[1]) + '_' + str(id))])
             kb = InlineKeyboardMarkup(
@@ -62,7 +63,7 @@ async def cancel_trainings(message: types.Message):
             )
             if kb.inline_keyboard:
                 await message.answer("Отменяйте тренировку не позднее, чем за 24 часа до её начала")
-                await message.answer("Выберите какую тренировку вы хотите отменить", reply_markup=kb)
+                await message.answer("Выберите, какую тренировку вы хотите отменить", reply_markup=kb)
             else:
                 await message.answer("У вас нет записи(нечего отменять).")
         elif not await check_age(message.from_user.id):
@@ -72,7 +73,8 @@ async def cancel_trainings(message: types.Message):
             locations = await get_kids_time_day_training(message, mode=mode)
             for l in locations:
                 if l[0] >= datetime.now() - timedelta(days=1):
-                    inline_kb.append([InlineKeyboardButton(text=f"{l[0].date()}  {l[1]}",
+                    wd = WEEKDAYS[l[0].date().weekday()]
+                    inline_kb.append([InlineKeyboardButton(text=f"{wd}, {l[0].date()}  {l[1]}",
                                                            callback_data='cancel_button_' + '_' + str(
                                                                l[0].date()) + '_' + str(l[1]) + '_' + str(id))])
             kb = InlineKeyboardMarkup(
@@ -80,7 +82,7 @@ async def cancel_trainings(message: types.Message):
             )
             if kb.inline_keyboard:
                 await message.answer("Отменяйте тренировку не позднее, чем за 24 часа до её начала")
-                await message.answer("Выберите какую тренировку вы хотите отменить", reply_markup=kb)
+                await message.answer("Выберите, какую тренировку вы хотите отменить", reply_markup=kb)
             else:
                 await message.answer("У вас нет записи(нечего отменять).")
     except Exception as e:
