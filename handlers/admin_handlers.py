@@ -167,6 +167,9 @@ async def change_swimmer_name(message: types.Message, command: CommandObject):
         connect, cursor = connect_db(DB_NAME1)
         cursor.execute("UPDATE users SET swimmer_surname = ? WHERE user_id = ?", (surname, id))
         connect.commit()
+        connect, cursor = connect_db(DB_NAME4)
+        cursor.execute("UPDATE leaderboard SET surname = ? WHERE user_id = ?", (surname, id))
+        connect.commit()
         await message.answer(f"Фамилия обновлена на {surname}")
     except Exception as e:
         await message.answer(f"ошибка {e}")
