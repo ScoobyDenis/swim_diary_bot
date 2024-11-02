@@ -114,7 +114,7 @@ async def get_leaderboard_table(message:types.Message, data):
     sorted_data = await async_sort(data)
     msg = ''
     place = 1
-    for swimmer in sorted_data[:10]:
+    for swimmer in sorted_data[:25]:
         point = swimmer[3]
         if isinstance(point, float):
             point = round(float(point), 1)
@@ -128,7 +128,7 @@ async def get_leaderboard_table(message:types.Message, data):
             msg += f' {place}. <b>{point}</b> - {swimmer[1]} {swimmer[2]}\n' # @{await get_swimmer_username(swimmer[0])}\n'
         place += 1
     await message.answer(msg, parse_mode="html")
-    return sorted_data[:10]
+    return sorted_data[:25]
 
 # search swimcoins by id
 async def get_data_by_id(data, id):
@@ -146,6 +146,7 @@ async def get_no_leaders(message:types.Message, id, data):
             swimcoins_to_lvl = sorted_data[place-2][-1] - int(sorted_data[place-1][-1])
             return place, swimcoins_to_lvl
         else:
+            swimcoins_to_lvl = sorted_data[place-2][-1] - int(sorted_data[place-1][-1])
             return ' ', swimcoins_to_lvl
     except Exception as e:
         logging.error(f"Произошла ошибка: {e}")
@@ -157,14 +158,14 @@ async def get_procent(votes):
     percentages = [(vote / total_votes) * 100 for vote in votes]
     return [round(percentage) for percentage in percentages]
 
-async def show_results(message: types.Message):
-    pr = await get_procent([POLL_RESULTS['option_1'], POLL_RESULTS['option_2'], POLL_RESULTS['option_3'], POLL_RESULTS['option_4']])
-    results_message = (
-        "Текущие результаты голосования:\n"
-        f"💂Шапочка с принтом: {POLL_RESULTS['option_1']}({pr[0]}%)\n"
-        f"🧸Набор игрушек антистресс: {POLL_RESULTS['option_2']}({pr[1]}%)\n"
-        f"💳Сертификат на озон/вб 1500руб: {POLL_RESULTS['option_3']}({pr[2]}%)\n"
-        f"🍬🥚Kinder набор: {POLL_RESULTS['option_4']}({pr[3]}%)\n".ljust(10)
-    )
-    await message.answer(results_message)
+# async def show_results(message: types.Message):
+#     pr = await get_procent([POLL_RESULTS['option_1'], POLL_RESULTS['option_2'], POLL_RESULTS['option_3'], POLL_RESULTS['option_4']])
+#     results_message = (
+#         "Текущие результаты голосования:\n"
+#         f"💂Шапочка с принтом: {POLL_RESULTS['option_1']}({pr[0]}%)\n"
+#         f"🧸Набор игрушек антистресс: {POLL_RESULTS['option_2']}({pr[1]}%)\n"
+#         f"💳Сертификат на озон/вб 1500руб: {POLL_RESULTS['option_3']}({pr[2]}%)\n"
+#         f"🍬🥚Kinder набор: {POLL_RESULTS['option_4']}({pr[3]}%)\n".ljust(10)
+#     )
+#     await message.answer(results_message)
 
