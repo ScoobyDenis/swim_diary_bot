@@ -110,11 +110,11 @@ async def async_sort(data):
     return sorted_data
 
 # get leaderboard table
-async def get_leaderboard_table(message:types.Message, data):
+async def get_leaderboard_table(message:types.Message, data, ind=20):
     sorted_data = await async_sort(data)
     msg = ''
     place = 1
-    for swimmer in sorted_data[:20]:
+    for swimmer in sorted_data[:ind]:
         point = swimmer[3]
         if isinstance(point, float):
             point = round(float(point), 1)
@@ -128,7 +128,7 @@ async def get_leaderboard_table(message:types.Message, data):
             msg += f' {place}. <b>{point}</b> - {swimmer[1]} {swimmer[2]}\n' # @{await get_swimmer_username(swimmer[0])}\n'
         place += 1
     await message.answer(msg, parse_mode="html")
-    return sorted_data[:20]
+    return sorted_data[:ind]
 
 # search swimcoins by id
 async def get_data_by_id(data, id):
