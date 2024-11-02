@@ -187,7 +187,7 @@ async def check_season1(message: types.Message):
         connect, cursor = connect_db(DB_NAME4)
         cursor.execute("SELECT user_id, name, surname, season1 FROM leaderboard")
         data = cursor.fetchall()
-        sorted_data = await get_leaderboard_table(message, data)
+        sorted_data = await get_leaderboard_table(message, data, ind=10)
         if message.from_user.id not in sorted_data and message.from_user.id != ADMIN:
             cursor.execute("SELECT season1 FROM leaderboard WHERE user_id = ?", (message.from_user.id, ))
             swimcoin = cursor.fetchone()
