@@ -180,16 +180,23 @@ async def check_leaderboard(message: types.Message):
      except Exception as e:
         logging.error(f"Произошла ошибка: {e}")
 
-# get season1
-@router.message(Command('season1'))
+@router.message(Command('last_season'))
 async def check_season1(message: types.Message):
+    await message.answer("Победители прошлого сезона:\n"
+                         "1 место - Баландин Степан😎\n"
+                         "2 место - Рзянин Артём🤟\n"
+                         "3 место - Шабанов Никита👍")
+    
+# get season2
+@router.message(Command('season2'))
+async def check_season2(message: types.Message):
     try:
         connect, cursor = connect_db(DB_NAME4)
-        cursor.execute("SELECT user_id, name, surname, season1 FROM leaderboard")
+        cursor.execute("SELECT user_id, name, surname, season2 FROM leaderboard")
         data = cursor.fetchall()
         sorted_data = await get_leaderboard_table(message, data, ind=10)
         if message.from_user.id not in sorted_data and message.from_user.id != ADMIN:
-            cursor.execute("SELECT season1 FROM leaderboard WHERE user_id = ?", (message.from_user.id, ))
+            cursor.execute("SELECT season2 FROM leaderboard WHERE user_id = ?", (message.from_user.id,))
             swimcoin = cursor.fetchone()
             if swimcoin and swimcoin[0] != '-':
                 swimcoin = int(swimcoin[0])
@@ -199,25 +206,20 @@ async def check_season1(message: types.Message):
                                          f"Поздравляю!Ты - лидер!🥳")
                 else:
                     await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
-                                        f"Ваше место {place}\n"
-                                        f"до {place-1} места {round(swimcoins_to_lvl, 1)} swimcoin(s)")
-        await message.answer(f"Награды:\n"
-                             f"<b>третье</b> место\n🌅 набор стикеров(50шт)\n\n"
-                             f"<b>второе</b>\n"
-                             f"🌅 набор стикеров(50шт),\n"
-                             f"🤽‍♂️  игровая тренировка(вместо обычной)\n\n"
-                             f"<b>первое</b>\n🌅 набор стикеров(50шт),\n"
-                             f"🤽‍♂️  игровая тренировка(вместо обычной),\n"
-                             f"🎁 подарочный сертификат на ozon/wb\n\n"
-                             f"<em>Сезон кончается 31 декабря 2024</em>", parse_mode="html")
+                                         f"Ваше место {place}\n"
+                                         f"до {place - 1} места {round(swimcoins_to_lvl, 1)} swimcoin(s)")
+        await message.answer(f"1 мая откроется магазины, где за\n"
+                             f"свимкойны можно купить призы\n"
+                             f"1 место свимкойны х2\n"
+                             f"2 место х1.5\n"
+                             f"3 место х1.3\n"
+                             f"4 место х1.2\n"
+                             f"5 место х1.1\n"
+                             f"<em>Сезон кончается 31 мая 2025</em>", parse_mode="html")
     except Exception as e:
         logging.error(f"Произошла ошибка: {e}")
 
-# get season2
-@router.message(Command('season2'))
-async def check_season2(message: types.Message):
-    # swimcoins + swimcoin shop
-    await message.answer(f"Сезон начнется 1 января 2025 года")
+
 
 # get diary
 @router.message(Command('diary'))
