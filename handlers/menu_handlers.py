@@ -208,7 +208,7 @@ async def check_season2(message: types.Message):
                     await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
                                          f"Ваше место {place}\n"
                                          f"до {place - 1} места {round(swimcoins_to_lvl, 1)} swimcoin(s)")
-        await message.answer(f"1 мая откроется магазины, где за\n"
+        await message.answer(f"1 мая откроется магазин, где за\n"
                              f"свимкойны можно купить призы\n"
                              f"1 место свимкойны х2\n"
                              f"2 место х1.5\n"
