@@ -208,7 +208,7 @@ async def check_season2(message: types.Message):
                     await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
                                          f"Ваше место {place}\n"
                                          f"до {place - 1} места {round(swimcoins_to_lvl, 1)} swimcoin(s)")
-        await message.answer(f"1 мая откроется магазин, где за\n"
+        await message.answer(f"19 мая откроется магазин, где за\n"
                              f"свимкойны можно купить призы\n"
                              f"1 место свимкойны х2\n"
                              f"2 место х1.5\n"
@@ -305,42 +305,7 @@ async def get_mean_meteres(callback: CallbackQuery):
     message = callback.message
     await get_meteres_info(message, my_id)
 
-# vote for 1 place present
-# @router.message(Command("vote"))
-# async def get_vote(message: types.Message):
-#     id = message.from_user.id
-#     await message.answer(
-#         "Выберите вариант:",
-#         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-#             [InlineKeyboardButton(text='💂Шапочка с оригинальным принтом', callback_data='votes_1')],
-#             [InlineKeyboardButton(text='🧸Набор игрушек антистресс', callback_data='votes_2')],
-#             [InlineKeyboardButton(text='💳Сертификат на озон/вб 1500руб', callback_data='votes_3')],
-#             [InlineKeyboardButton(text='🍬🥚Kinder набор', callback_data='votes_4')],
-#             [InlineKeyboardButton(text='📊Показать результаты голосования', callback_data='show_results')]
-#         ])
-#     )
-
-# # add vote and get vote table
-# @router.callback_query(F.data.startswith('votes'))
-# async def add_vote(callback: CallbackQuery):
-#     if callback.from_user.id not in VOTERS_ID:
-#         if callback.data == 'votes_1':
-#             POLL_RESULTS['option_1'] += 1
-#         elif callback.data == 'votes_2':
-#             POLL_RESULTS['option_2'] += 1
-#         elif callback.data == 'votes_3':
-#             POLL_RESULTS['option_3'] += 1
-#         elif callback.data == 'votes_4':
-#             POLL_RESULTS['option_4'] += 1
-#         if callback.from_user.id != ADMIN:
-#             VOTERS_ID.append(callback.from_user.id)
-#         await callback.message.answer("Ваш голос учтен!")
-#     else:
-#         await callback.message.answer("Вы уже голосовали!")
-#     await show_results(callback.message)
-
-# @router.callback_query(F.data.startswith('show'))
-# async def show_vote_res(callback: CallbackQuery):
-#     await show_results(callback.message)
-
+@router.message(Command('shop'))
+async def get_shop(message: types.Message):
+    await message.answer("Магазин откроется 19 мая")
 
