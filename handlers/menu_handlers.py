@@ -305,7 +305,5 @@ async def get_mean_meteres(callback: CallbackQuery):
     message = callback.message
     await get_meteres_info(message, my_id)
 
-@router.message(Command('shop'))
-async def get_shop(message: types.Message):
-    await message.answer("Магазин откроется 19 мая")
+
 
