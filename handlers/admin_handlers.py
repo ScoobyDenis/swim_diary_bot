@@ -303,11 +303,11 @@ async def del_swimmer(message: types.Message, command: CommandObject):
     except:
         await message.answer("Неверное id")
 
-@router.message(Command("new_column"))
+'''@router.message(Command("new_column"))
 async def add_new_column_to_db(message: types.Message):
     connect,cursor = connect_db(DB_NAME4)
     try:
         cursor.execute("ALTER TABLE leaderboard ADD COLUMN presents2 TEXT")
         connect.commit()
     finally:
-        connect.close()
+        connect.close() ''' 
