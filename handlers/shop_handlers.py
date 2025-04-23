@@ -11,7 +11,7 @@ router = Router()
 @router.message(Command('shop'))
 async def get_web_shop(message: types.Message):
     await message.answer(
-        "магазин",
+        "🏪магазин",
         reply_markup=types.InlineKeyboardMarkup(
             inline_keyboard=[
                 [
