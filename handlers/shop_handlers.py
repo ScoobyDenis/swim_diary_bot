@@ -131,7 +131,7 @@ async def process_buy_big_iphone(callback: CallbackQuery):
 @router.callback_query(F.data.startswith('finish_sticker_'))
 async def process_end_buy_sticker(callback: CallbackQuery):
     await callback.message.answer("Покупки возможны с 19мая")
-    #await execute_purchase(callback=callback, price=700, present_type="стикер", success_message="Денис передаст стикер в ближайшее время")
+    await execute_purchase(callback=callback, price=700, present_type="стикер", success_message="Денис передаст стикер в ближайшее время")
 
 
 @router.callback_query(F.data.startswith('finish_open_sticker_'))
