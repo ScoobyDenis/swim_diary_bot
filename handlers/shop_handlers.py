@@ -20,7 +20,7 @@ async def get_web_shop(message: types.Message):
                         url="https://scoobydenis.github.io/swim_shop/"
                     ),
                     types.InlineKeyboardButton(
-                        text="📦Начать покупки📦",
+                        text="📦Начать покупки",
                         callback_data='shops2'
                     )
                 ]
