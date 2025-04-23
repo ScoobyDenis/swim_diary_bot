@@ -60,35 +60,6 @@ async def add_child(message: types.Message, command: CommandObject):
         await message.answer(f"Ошибка {e}\n"
                              f"Скорее всего неправильный id родителя")
 
-# # add train_result
-# @router.message(Command('train_result')) # id day metres mark comment
-# async def add_train_result(message: types.Message, command: CommandObject):
-#     args = command.args.split()
-#     id = int(args[0])
-#     if not await check_id_in_users(id):
-#         day = str(datetime.now().date() - timedelta(days=int(args[1])))
-#         meteres = int(args[2])
-#         mark = int(args[3])
-#         try:
-#             comment = ' '.join(word.strip("'") for word in args[4:])
-#             connect, cursor = connect_db(DB_NAME3)
-#             cursor.execute("UPDATE results SET date = ?, meteres_last = ?, mark_last = ?, "
-#                            "comment = ?, meteres = meteres + ?, "
-#                            "mark = mark + ?, "
-#                            "total_lessons = total_lessons + 1 WHERE user_id = ?",
-#                            (day, meteres, mark, comment, meteres, mark, id))
-#             connect.commit()
-#             await pick_info_and_add(message, day, id, meteres, mark)
-#         except:
-#             await message.answer("Нет комментария")
-
-#         await message.answer(f"Для пловца {id} добавлено: \n"
-#                              f"Метров - {meteres}\n"
-#                              f"Оценка - {mark}\n"
-#                              f"Комментарий - {comment}\n"
-#                              f"Дата - {day}")
-#     else:
-#         await message.answer(f"Нет пловца с id {id}")
 
 @router.message(Command('train_result')) # id day metres mark comment
 async def add_train_result(message: types.Message, command: CommandObject):
@@ -331,3 +302,12 @@ async def del_swimmer(message: types.Message, command: CommandObject):
         await message.answer(f"Лидер с id {id} удален")
     except:
         await message.answer("Неверное id")
+
+@router.message(Command("new_column"))
+async def add_new_column_to_db(message: types.Message):
+    connect,cursor = connect_db(DB_NAME4)
+    try:
+        cursor.execute("ALTER TABLE leaderboard ADD COLUMN presents2 TEXT")
+        connect.commit()
+    finally:
+        connect.close()

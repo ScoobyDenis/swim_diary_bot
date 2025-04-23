@@ -1,7 +1,7 @@
 import asyncio
 from aiogram import Bot, Dispatcher
 from config_data.config import Config, load_config
-from handlers import main_handlers, stats_handlers, registr_handlers, menu_handlers, admin_handlers
+from handlers import main_handlers, stats_handlers, registr_handlers, menu_handlers, admin_handlers, shop_handlers
 from data_bases.connect_data_base import connect_db, DB_NAME1, DB_NAME2, DB_NAME3, DB_NAME4
 from set_menu.parent_menu import set_parent_menu
 
@@ -15,6 +15,7 @@ async def main():
     dp = Dispatcher()
 
     # Регистриуем роутеры в диспетчере
+    dp.include_router(shop_handlers.router)
     dp.include_router(main_handlers.router)
     dp.include_router(registr_handlers.router)
     dp.include_router(stats_handlers.router)

@@ -215,7 +215,7 @@ async def check_season2(message: types.Message):
                              f"3 место х1.3\n"
                              f"4 место х1.2\n"
                              f"5 место х1.1\n"
-                             f"<em>Сезон кончается 31 мая 2025</em>", parse_mode="html")
+                             f"<em>Сезон кончается 19 мая 2025</em>", parse_mode="html")
     except Exception as e:
         logging.error(f"Произошла ошибка: {e}")
 
