@@ -4,7 +4,7 @@ LEXICON_COMMANDS_RU: dict[str, str] = {
     '/diary': '📔 дневник пловца',
     '/check_results': '🗓 лучшее время',
     '/season2': '🏅 лидеры сезона',
-    '/shop': '🛒 магазин',
+    '/shop': '🛍 магазин',
     '/basket': '🛒купленные товары',
     '/leaderboard': '🏆таблица лидеров за все время', 
     '/last_season': 'победители прошлого сезона',
