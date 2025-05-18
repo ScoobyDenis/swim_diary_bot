@@ -44,6 +44,7 @@ ADMIN_MENU = f"/cancel - удалить из расписания\n" \
              f"/add_child_to_parent id_par id_swim- прикрепить ребенка\n" \
              f"/del_parent id - удаление родителя\n" \
              f"/del_swimmer id - удаление пловца\n" \
+             f"/change_kid_id par_id kid_id - заменить ребенка(id)\n" \
              f"/mult_swimcoins id mult - добавление очков 5 лидерам\n" \
              f"/change_swimmer_name id name - смена имени пловца\n" \
              f"/change_swimmer_surname id surname - смена фамилии пловца\n" \

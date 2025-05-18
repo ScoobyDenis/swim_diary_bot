@@ -303,11 +303,27 @@ async def del_swimmer(message: types.Message, command: CommandObject):
     except:
         await message.answer("Неверное id")
 
-@router.message(Command("new_column"))
-async def add_new_column_to_db(message: types.Message):
-    connect,cursor = connect_db(DB_NAME4)
+@router.message(Command("change_kid_id"))
+async def change_kid_id(message: types.Message, command: CommandObject):
+    connect,cursor = connect_db(DB_NAME2)
+    par_id, kid_id = command.args.split()
     try:
-        cursor.execute("ALTER TABLE leaderboard ADD COLUMN presents2 TEXT")
+        cursor.execute("UPDATE parents SET children = ? WHERE user_id = ?", (kid_id, par_id))
         connect.commit()
+    except Exception as e:
+        logging.error(e)
     finally:
         connect.close()
+
+@router.message(Command("add_swimcoins"))
+async def add_swimcoins(message: types.Message, command: CommandObject):
+    id, swimcoins = command.args.split()
+    connect, cursor = connect_db(DB_NAME4)
+    try:
+        cursor.execute("UPDATE leaderboard SET season2 = ? WHERE user_id = ?", (swimcoins, id))
+        connect.commit()
+    except Exception as e:
+        logging.error(e)
+    finally:
+        connect.close()
+
