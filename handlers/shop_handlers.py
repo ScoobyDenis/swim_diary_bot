@@ -130,64 +130,54 @@ async def process_buy_big_iphone(callback: CallbackQuery):
 
 @router.callback_query(F.data.startswith('finish_sticker_'))
 async def process_end_buy_sticker(callback: CallbackQuery):
-    await callback.message.answer("Покупки возможны с 19мая")
-    #await execute_purchase(callback=callback, price=600, present_type="стикер", success_message="Денис передаст стикер в ближайшее время")
+    await execute_purchase(callback=callback, price=600, present_type="стикер", success_message="Денис передаст стикер в ближайшее время")
 
 @router.callback_query(F.data.startswith('finish_open_sticker_'))
 async def process_end_buy_open_sticker(callback: CallbackQuery):
-    await callback.message.answer("Покупки возможны с 19мая")
-    #await execute_purchase(callback=callback, price=700, present_type="стикер(на выбор)",
-    #                       success_message="Денис передаст стикер(на выбор) в ближайшее время")
+    await execute_purchase(callback=callback, price=700, present_type="стикер(на выбор)",
+                           success_message="Денис передаст стикер(на выбор) в ближайшее время")
 
 @router.callback_query(F.data.startswith('finish_pack_sticker_'))
 async def process_end_buy_pack_sticker(callback: CallbackQuery):
-    await callback.message.answer("Покупки возможны с 19мая")
-    #await execute_purchase(callback=callback, price=8000, present_type="набор стикеров",
-    #                       success_message="Денис передаст набор стикеров в ближайшее время")
+    await execute_purchase(callback=callback, price=8000, present_type="набор стикеров",
+                           success_message="Денис передаст набор стикеров в ближайшее время")
 
 @router.callback_query(F.data.startswith('finish_squish_'))
 async def process_end_buy_squish(callback: CallbackQuery):
-    await callback.message.answer("Покупки возможны с 19мая")
-    #await execute_purchase(callback=callback, price=2200, present_type="сквиш",
-    #                       success_message="Денис передаст сквиш в ближайшее время")
+    await execute_purchase(callback=callback, price=2200, present_type="сквиш",
+                           success_message="Денис передаст сквиш в ближайшее время")
 
 @router.callback_query(F.data.startswith('finish_open_squish_'))
 async def process_end_buy_open_squish(callback: CallbackQuery):
-    await callback.message.answer("Покупки возможны с 19мая")
-    #await execute_purchase(callback=callback, price=2500, present_type="сквиш(на выбор)",
-    #                       success_message="Денис передаст сквиш(на выбор) в ближайшее время")
+    await execute_purchase(callback=callback, price=2500, present_type="сквиш(на выбор)",
+                        success_message="Денис передаст сквиш(на выбор) в ближайшее время")
 
 @router.callback_query(F.data.startswith('finish_antistress_'))
 async def process_end_buy_antistress(callback: CallbackQuery):
-    await callback.message.answer("Покупки возможны с 19мая")
-    # await execute_purchase(callback=callback, price=9000, present_type="антистресс",
-    #                     success_message="Денис передаст антистресс в ближайшее время")
+    await execute_purchase(callback=callback, price=9000, present_type="антистресс",
+                         success_message="Денис передаст антистресс в ближайшее время")
 
 
 @router.callback_query(F.data.startswith('finish_open_antistress_'))
 async def process_end_buy_open_antistress(callback: CallbackQuery):
-    await callback.message.answer("Покупки возможны с 19мая")
-    #await execute_purchase(callback=callback, price=10000, present_type="антистресс(на выбор)",
-    #                      success_message="Денис передаст антистресс(на выбор) в ближайшее время")
+    await execute_purchase(callback=callback, price=10000, present_type="антистресс(на выбор)",
+                          success_message="Денис передаст антистресс(на выбор) в ближайшее время")
 
 @router.callback_query(F.data.startswith('finish_small_'))
 async def process_end_buy_small(callback: CallbackQuery):
-    await callback.message.answer("Покупки возможны с 19мая")
-    #await execute_purchase(callback=callback, price=30000, present_type="сертификат(2000руб)",
-    #                      success_message="Денис передаст сертификат(2000руб) в ближайшее время")
+    await execute_purchase(callback=callback, price=30000, present_type="сертификат(2000руб)",
+                          success_message="Денис передаст сертификат(2000руб) в ближайшее время")
 
 
 @router.callback_query(F.data.startswith('finish_big_'))
 async def process_end_buy_open_big(callback: CallbackQuery):
-    await callback.message.answer("Покупки возможны с 19мая")
-    #await execute_purchase(callback=callback, price=50000, present_type="антистресс(на выбор)",
-    #                   success_message="Денис передаст сертификат(5000руб) в ближайшее время")
+    await execute_purchase(callback=callback, price=50000, present_type="антистресс(на выбор)",
+                       success_message="Денис передаст сертификат(5000руб) в ближайшее время")
 
 @router.callback_query(F.data.startswith('finish_iphone_'))
 async def process_end_buy_iphone(callback: CallbackQuery):
-    await callback.message.answer("Покупки возможны с 19мая")
-    #await execute_purchase(callback=callback, price=150000, present_type="Iphone",
-    #                   success_message="Денис передаст Iphone в ближайшее время")
+    await execute_purchase(callback=callback, price=150000, present_type="Iphone",
+                       success_message="Денис передаст Iphone в ближайшее время")
 
 @router.message(Command("basket"))
 async def get_swimmers_presents(message: types.Message):
