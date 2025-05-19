@@ -71,8 +71,8 @@ async def check_date_to_challenge(day):
     start_first_season = datetime(2024, 10, 10)
     end_first_season = datetime(2024, 12, 31)
     start_second_season = datetime(2025, 1, 1)
-    end_second_season = datetime(2025, 5, 31)
-    start_third_season = datetime(2025, 6, 1)
+    end_second_season = datetime(2025, 5, 17)
+    start_third_season = datetime(2025, 5, 18)
     end_trird_season = datetime(2025, 8, 31)
     start_fourth_season = datetime(2025, 9, 1)
     end_fourth_season = datetime(2025, 12, 31)
@@ -158,14 +158,12 @@ async def get_procent(votes):
     percentages = [(vote / total_votes) * 100 for vote in votes]
     return [round(percentage) for percentage in percentages]
 
-# async def show_results(message: types.Message):
-#     pr = await get_procent([POLL_RESULTS['option_1'], POLL_RESULTS['option_2'], POLL_RESULTS['option_3'], POLL_RESULTS['option_4']])
-#     results_message = (
-#         "Текущие результаты голосования:\n"
-#         f"💂Шапочка с принтом: {POLL_RESULTS['option_1']}({pr[0]}%)\n"
-#         f"🧸Набор игрушек антистресс: {POLL_RESULTS['option_2']}({pr[1]}%)\n"
-#         f"💳Сертификат на озон/вб 1500руб: {POLL_RESULTS['option_3']}({pr[2]}%)\n"
-#         f"🍬🥚Kinder набор: {POLL_RESULTS['option_4']}({pr[3]}%)\n".ljust(10)
-#     )
-#     await message.answer(results_message)
+async def get_swimcoins_balance(message:types.Message, id):
+    try:
+        connect, cursor = connect_db(DB_NAME4)
+        cursor.execute("SELECT season2 FROM leaderboard WHERE user_id = ?", (id,))
+        swimcoins = cursor.fetchone()[0]
+        await message.answer(f"Ваш балансе - {swimcoins}💲swimcoins")
+    except Exception as e:
+        logging.error(f"Произошла ошибка: {e}")
 

@@ -241,22 +241,6 @@ async def for_kb_diary(callback: CallbackQuery):
     message = callback.message
     await get_kb_diary(message, id)
 
-# # check last lesson result finisher
-# @router.callback_query(F.data.startswith('lesson_'))
-# async def last_lesson(callback: CallbackQuery):
-#     my_id = str(callback.data.split('_')[1])
-#     connect, cursor = connect_db(DB_NAME3)
-#     cursor.execute(f"SELECT date, meteres_last, mark_last, comment FROM results WHERE user_id = {my_id}")
-#     data = cursor.fetchone()
-#     day = data[0]
-#     meteres = data[1]
-#     mark = data[2]
-#     comment = data[-1]
-#     await callback.message.answer(f"На тренировке {day} числа\n"
-#                                   f"🏊 Проплыто метров - {meteres}\n"
-#                                   f"5️⃣ Оценка - {mark}\n"
-#                                   f"📝 Комментарий тренера - '{comment}'")
-
 # get last lesson results
 @router.callback_query(F.data.startswith('lesson_'))
 async def last_lesson(callback: CallbackQuery):
@@ -306,5 +290,22 @@ async def get_mean_meteres(callback: CallbackQuery):
     message = callback.message
     await get_meteres_info(message, my_id)
 
+@router.message(Command("balance"))
+async def get_balance(message: types.Message):
+    try:
+        id = message.from_user.id
+        if await check_id_in_users(id):
+            await select_swimmer(message, 'balancekid_')
+        else:
+            await get_swimcoins_balance(message, id)
+    except Exception as e:
+        logging.error(f"Произошла ошибка: {e}")
 
-
+@router.callback_query(F.data.startswith('balancekid_'))
+async def for_kb_balance(callback: CallbackQuery):
+    try:
+        id = str(callback.data.split('_')[1])
+        message = callback.message
+        await get_swimcoins_balance(message, id)
+    except Exception as e:
+        logging.error(f"Произошла ошибка: {e}")
