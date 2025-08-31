@@ -74,7 +74,7 @@ async def check_date_to_challenge(day):
     end_second_season = datetime(2025, 5, 17)
     start_third_season = datetime(2025, 5, 18)
     end_trird_season = datetime(2025, 8, 31)
-    start_fourth_season = datetime(2025, 9, 1)
+    start_fourth_season = datetime(2025, 8, 31)
     end_fourth_season = datetime(2025, 12, 31)
     if start_first_season <= day <= end_first_season:
         return 'season1'
