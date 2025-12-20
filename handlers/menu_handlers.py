@@ -211,7 +211,7 @@ async def check_season2(message: types.Message):
         await message.answer(f"Награды за сезон:\n"
                              f"1 место - игровая тренировка,\n"
                              f"125 стикеров, "
-                             f"сквиш/n"
+                             f"сквиш \n"
                              f"2 место - игровая тренировка,"
                              f"100 стикеров, "
                              f"сквиш\n"
