@@ -158,45 +158,54 @@ async def distances(callback: CallbackQuery):
 
 @router.message(Command('leaderboard'))
 async def check_leaderboard(message: types.Message):
-     try:
-        connect, cursor = connect_db(DB_NAME4)
-        cursor.execute("SELECT user_id, name, surname, points FROM leaderboard")
-        data = cursor.fetchall()
-        sorted_data = await get_leaderboard_table(message, data)
-        if message.from_user.id not in sorted_data and message.from_user.id != ADMIN:
-            cursor.execute("SELECT points FROM leaderboard WHERE user_id = ?", (message.from_user.id, ))
-            swimcoin = cursor.fetchone()
-            if swimcoin and swimcoin[0] != '-':
-                swimcoin = int(swimcoin[0])
-                place, swimcoins_to_lvl = await get_no_leaders(message, message.from_user.id, data)
-                if place == 1:
-                    await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
-                                         f"Поздравляю!Ты - лидер!🥳\n"
-                                         f"И любимчик тренера 😉")
-                else:
-                    await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
-                                         f"Ваше место {place}\n"
-                                         f"до {place-1} места {round(swimcoins_to_lvl, 1)} swimcoin(s)")
-     except Exception as e:
+    try:
+            connect, cursor = connect_db(DB_NAME4)
+            cursor.execute("SELECT user_id, name, surname, points FROM leaderboard")
+            data = cursor.fetchall()
+            sorted_data = await get_leaderboard_table(message, data)
+            if message.from_user.id not in sorted_data and message.from_user.id != ADMIN:
+                cursor.execute("SELECT points FROM leaderboard WHERE user_id = ?", (message.from_user.id, ))
+                swimcoin = cursor.fetchone()
+                if swimcoin and swimcoin[0] != '-':
+                    swimcoin = int(swimcoin[0])
+                    place, swimcoins_to_lvl = await get_no_leaders(message, message.from_user.id, data)
+                    if place == 1:
+                        await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
+                                             f"Поздравляю!Ты - лидер!🥳\n"
+                                             f"И любимчик тренера 😉")
+                    else:
+                        await message.answer(f"У вас {swimcoin} swimcoin(s)🟡\n"
+                                             f"Ваше место {place}\n"
+                                             f"до {place-1} места {round(swimcoins_to_lvl, 1)} swimcoin(s)")
+    except Exception as e:
         logging.error(f"Произошла ошибка: {e}")
+
+
 
 @router.message(Command('last_season'))
 async def check_season1(message: types.Message):
     await message.answer("Победители прошлого сезона:\n"
-                         "1 место - Степан Баландин\n"
-                         "2 место - Матвей Егоркин\n"
-                         "3 место - Даша Мазнева\n")
+                         "1 место - Данил Макаров\n"
+                         "2 место - Андрей Рзянин\n"
+                         "3 место - Арсений Добряков\n"
+                         "4 место - Артём Рзянин\n"
+                         "5 место - Александр Мурзаков\n"
+                         "6 место - Тимур Мустакимов\n"
+                         "7 место - Матвей Егоркин\n"
+                         "8 место - Макар Сидоров\n"
+                         "9 место - Иван Кузнецов\n"
+                         "10 место - Степан Минаев")
     
 # get season2
-@router.message(Command('season4'))
+@router.message(Command('season5'))
 async def check_season2(message: types.Message):
     try:
         connect, cursor = connect_db(DB_NAME4)
-        cursor.execute("SELECT user_id, name, surname, season4 FROM leaderboard")
+        cursor.execute("SELECT user_id, name, surname, season5 FROM leaderboard")
         data = cursor.fetchall()
         sorted_data = await get_leaderboard_table(message, data, ind=10)
         if message.from_user.id not in sorted_data and message.from_user.id != ADMIN:
-            cursor.execute("SELECT season4 FROM leaderboard WHERE user_id = ?", (message.from_user.id,))
+            cursor.execute("SELECT season5 FROM leaderboard WHERE user_id = ?", (message.from_user.id,))
             swimcoin = cursor.fetchone()
             if swimcoin and swimcoin[0] != '-':
                 swimcoin = int(swimcoin[0])
@@ -209,25 +218,11 @@ async def check_season2(message: types.Message):
                                          f"Ваше место {place}\n"
                                          f"до {place - 1} места {round(swimcoins_to_lvl, 1)} swimcoin(s)")
         await message.answer(f"Награды за сезон:\n"
-                             f"1 место - игровая тренировка,\n"
-                             f"125 стикеров, "
-                             f"сквиш \n"
-                             f"2 место - игровая тренировка,"
-                             f"100 стикеров, "
-                             f"сквиш\n"
-                             f"3 место - игровая тренировка,"
-                             f"100 стикеров,"
-                             f"сквиш\n"
-                             f"4 место - 50 стикеров\n"
-                             f"5 место - 40 стикеров\n"
-                             f"6 место - 30 стикеров\n"
-                             f"7 место - 25 стикеров\n"
-                             f"8 место - 20 стикеров\n"
-                             f"9 место - 15 стикеров\n"
-                             f"10 место - 10 стикеров\n"
-                             f"<em>Сезон кончается 31 декабря 2025</em>", parse_mode="html")
+                             f"Магазин откроется 1 мая\n"
+                             f"<em>Сезон кончается 31 мая 2026</em>", parse_mode="html")
     except Exception as e:
         logging.error(f"Произошла ошибка: {e}")
+
 
 
 

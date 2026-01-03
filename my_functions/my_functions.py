@@ -377,8 +377,8 @@ async def create_new_parent(id):
 # create new leaderboard user
 async def create_new_leaderboard_user(id):
     connect, cursor = connect_db(DB_NAME4)
-    data = [id, '-', '-', '-', '-', '-', '-', '-']
-    cursor.execute("INSERT INTO leaderboard (user_id, name, surname, points, season1, season2, season3, season4) VALUES(?, ?, ?, ?, ?, ?, ?, ?)", data)
+    data = [id, '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+    cursor.execute("INSERT INTO leaderboard (user_id, name, surname, points, season1, season2, season3, season4, season5, season6, season7, season8) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
     connect.commit()
 
 # get info from all distances

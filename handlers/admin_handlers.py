@@ -327,3 +327,63 @@ async def add_swimcoins(message: types.Message, command: CommandObject):
     finally:
         connect.close()
 
+@router.message(Command("add_new_seasons"))
+async def add_new_season(message: types.Message):
+    connect, cursor = connect_db(DB_NAME4)
+    try:
+        cursor.execute("ALTER TABLE leaderboard ADD COLUMN season5 REAL")
+        cursor.execute("ALTER TABLE leaderboard ADD COLUMN season6 REAL")
+        connect.commit()
+        print("Колонки season5-8 успешно добавлены")
+    except Exception as e:
+        print(f"Колонки уже существуют или ошибка: {e}")
+
+
+@router.message(Command("update_seasons"))
+async def update_users_season(message: types.Message):
+    # Запустите эту функцию один раз
+    update_existing_users_with_seasons()
+    fix_existing_users()
+
+def fix_existing_users():
+    """Добавляет недостающие сезоны существующим пользователям"""
+    connect, cursor = connect_db(DB_NAME4)
+
+    try:
+        # Проверяем, какие колонки есть
+        cursor.execute("PRAGMA table_info(leaderboard)")
+        columns = [col[1] for col in cursor.fetchall()]
+        print(f"Колонки в таблице: {columns}")
+
+        # Проверяем и добавляем недостающие сезоны
+        seasons_to_check = ['season5', 'season6', 'season7', 'season8']
+        for season in seasons_to_check:
+            if season not in columns:
+                print(f"Добавляем колонку {season}...")
+                cursor.execute(f"ALTER TABLE leaderboard ADD COLUMN {season} TEXT DEFAULT '-'")
+
+        # Обновляем NULL значения на '-'
+        for season in seasons_to_check:
+            cursor.execute(f"UPDATE leaderboard SET {season} = '-' WHERE {season} IS NULL")
+
+        # Также проверяем presents2
+        cursor.execute("UPDATE leaderboard SET presents2 = '-' WHERE presents2 IS NULL")
+
+        connect.commit()
+
+        # Показываем статистику
+        cursor.execute("SELECT COUNT(*) FROM leaderboard")
+        total = cursor.fetchone()[0]
+
+        for season in seasons_to_check:
+            cursor.execute(f"SELECT COUNT(*) FROM leaderboard WHERE {season} = '-'")
+            count = cursor.fetchone()[0]
+            print(f"  {season}: {count}/{total} пользователей имеют '-'")
+
+        print("✅ Существующие пользователи обновлены")
+
+    except Exception as e:
+        print(f"❌ Ошибка: {e}")
+        connect.rollback()
+    finally:
+        connect.close()

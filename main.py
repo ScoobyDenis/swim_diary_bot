@@ -78,7 +78,11 @@ async def main():
                     season1 REAL,
                     season2 REAL,
                     season3 REAl,
-                    season4 REAL
+                    season4 REAL,
+                    season5 REAL,
+                    season6 REAL,
+                    season7 REAL,
+                    season8 REAL
                     )
                     """)
 

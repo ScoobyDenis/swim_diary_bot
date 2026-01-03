@@ -3,7 +3,7 @@ LEXICON_COMMANDS_RU: dict[str, str] = {
     '/registr': '✍️запись на тренировку',
     '/diary': '📔 дневник пловца',
     '/check_results': '🗓 лучшее время',
-    '/season4': '🏅 лидеры сезона',
+    '/season5': '🏅 лидеры сезона',
     #'/shop': '🛍 магазин',
     #'/balance': '👛баланс SwimCoins',
     #'/basket': '🛒купленные товары',
